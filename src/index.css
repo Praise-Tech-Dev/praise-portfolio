@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: <html class="dark"> flips the tokens below. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Design tokens. Components use semantic names (bg-bg, text-muted, border-line,
+  text-accent) and never hard-code a colour, so each theme is designed once, here.
+  Light and dark are separate palettes, not an inversion of each other.
+*/
+:root {
+  --bg: #faf8f4;          /* warm white */
+  --alt: #eeedf7;         /* faint blue-violet wash for alternate sections */
+  --surface: #ffffff;
+  --fg: #0e1330;          /* deep navy */
+  --muted: #535d78;       /* slate */
+  --line: #d9d7e5;
+  --accent: #2a3fd6;      /* cobalt */
+  --accent-2: #6d4ce0;    /* blue-violet */
+  --accent-soft: #e3e6fb;
+  --on-accent: #ffffff;
+  --wave-a: #2a3fd6;
+  --wave-b: #8a63f0;
+  --wave-opacity: 0.5;
+}
+.dark {
+  --bg: #0a0e24;
+  --alt: #0e1431;
+  --surface: #131a3d;
+  --fg: #ecebf5;
+  --muted: #a4abc6;
+  --line: #28305a;
+  --accent: #93a5ff;
+  --accent-2: #b09bff;
+  --accent-soft: #1a2352;
+  --on-accent: #0a0e24;
+  --wave-a: #4f6bff;
+  --wave-b: #a07bff;
+  --wave-opacity: 0.55;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-alt: var(--alt);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Plus Jakarta Sans Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.12; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: var(--accent-soft); color: var(--fg); }
+  img { max-width: 100%; height: auto; }
+}
+
+@layer components {
+  /* Fluid type scale: sizes grow smoothly between phone and desktop. */
+  .t-display { font-size: clamp(2.5rem, 1.5rem + 4.2vw, 4.75rem); font-weight: 800; }
+  .t-title { font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem); font-weight: 800; }
+  .t-sub { font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.65rem); font-weight: 700; }
+  .t-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  .tech-icon { color: var(--tc); display: inline-flex; }
+  .dark .tech-icon { color: var(--tc-dark, var(--tc)); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 2.75rem; padding: 0.5rem 1.15rem; border-radius: 0.5rem;
+    font-weight: 600; font-size: 0.9375rem; line-height: 1.2;
+    transition: background-color .18s, color .18s, border-color .18s, transform .18s;
+  }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: color-mix(in srgb, var(--accent) 88%, var(--fg)); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--fg); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .link-inline {
+    color: var(--accent); font-weight: 600;
+    text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;
+  }
+  .link-inline:hover { text-decoration-thickness: 2px; }
+}
+
+/* ---------- Motion (all of it is switched off for reduced-motion users) ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .6s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 90ms); }
+
+html.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+html.js .reveal[data-in="true"] { opacity: 1; transform: none; }
+
+@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.toast { animation: toast-in .25s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .toast { animation: none; }
+  html.js .reveal { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}

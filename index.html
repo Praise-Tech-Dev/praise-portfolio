@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Praise Adeogun — Frontend-Focused Software Engineer</title>
+    <meta
+      name="description"
+      content="Portfolio of Praise Adeogun, a Computer Science student at the University of Ibadan and frontend-focused software engineer building with React, TypeScript and Tailwind CSS."
+    />
+    <meta name="theme-color" content="#FAF8F4" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Praise Adeogun — Frontend-Focused Software Engineer" />
+    <meta
+      property="og:description"
+      content="Frontend-focused software engineer working with React and TypeScript, building toward full-stack."
+    />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Runs before first paint so the page never flashes the wrong theme.
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        var t = null;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        var dark = t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) d.classList.add("dark");
+        d.style.colorScheme = dark ? "dark" : "light";
+      })();
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Praise Adeogun",
+        "jobTitle": "Frontend-Focused Software Engineer",
+        "alumniOf": "University of Ibadan",
+        "sameAs": [
+          "https://github.com/Praise-Tech-Dev",
+          "https://www.linkedin.com/in/praise-adeogun-a008b72a6/"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>This portfolio needs JavaScript. You can reach Praise at spraiseadeogun2@gmail.com.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
